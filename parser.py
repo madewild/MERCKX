@@ -104,10 +104,9 @@ def eurolib(concept):
   topic = unicode(concept).encode('utf-8')
   param['query'] = 'advanced((SUBJECT,'+topic+'))'
   url = base_url + urllib.urlencode(param)
-  #text = urllib2.urlopen(url).read()
-  #json_code = json.loads(text)
-  #return json_code["NoOfResults"]
-  return 0
+  text = urllib2.urlopen(url).read()
+  json_code = json.loads(text)
+  return json_code["NoOfResults"]
 
 def dbpedia(concept):
   base_url = "http://dbpedia.org/data/"
