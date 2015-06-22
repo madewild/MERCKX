@@ -142,6 +142,22 @@ def get_abstract(concept):
   except KeyError:
     return False
 
+def texts_by_year(texts):
+  yearlist = defaultdict(lambda:[])
+  for filename,text in texts.items():
+    year = filename[4:8]
+    yearlist[year].append(text)
+  return yearlist
+
+def get_words(texts):
+  words = defaultdict(lambda:0)
+  for text in texts:
+    tokens = wordpunct_tokenize(text)
+    for token in tokens:
+      if token.isalpha() and len(token)>3:
+        words[token]+=1
+  return words
+
 ########
 # MAIN #
 ########
@@ -150,7 +166,7 @@ def main(argv):
   folder = argv[-1]
   listbase,listing = get_files(folder)
   try:
-    opts, args = getopt.getopt(argv,"te")
+    opts, args = getopt.getopt(argv,"tew")
   except getopt.GetoptError:
     print 'parse.py -t OR -e FOLDER'
     sys.exit(2)
@@ -164,6 +180,19 @@ def main(argv):
       entities = get_entities(texts)
       clusters = get_clusters(entities,2)
       print_clusters(clusters,entities)
+    elif opt == '-w':
+      texts = get_texts(listbase,listing)
+      freq = get_words(texts.values())
+      yearlist = texts_by_year(texts)
+      for year in sorted(yearlist):
+        print year
+        words = get_words(yearlist[year])
+        for w in words:
+          tf = words[w]
+          idf = freq[w]
+          x = 1.0*tf/idf
+          if idf>10 and x > .7:
+            print w,x
 
 if __name__ == "__main__":
     main(sys.argv[1:])
