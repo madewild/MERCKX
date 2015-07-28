@@ -23,7 +23,7 @@ def get_labels(uri):
   return labels
 
 def get_types(uri):
-  sparql = SPARQLWrapper("http://dbpedia.org/sparql")
+  sparql = SPARQLWrapper("http://live.dbpedia.org/sparql")
   sparql.setQuery("""
     SELECT DISTINCT ?type
     WHERE { <"""+uri+"""> a ?type }
@@ -56,7 +56,8 @@ def print_uri(ngram,i):
     s.remove(word)
     del ind[0]
 
-f = open("dbpedia/labels_nl.nt").readlines()+open("dbpedia/labels_fr.nt").readlines()
+#f = open("dbpedia/labels_nl.nt").readlines()+open("dbpedia/labels_fr.nt").readlines()
+f = open("dbpedia/labels_fr.nt").readlines()
 print "Processing",len(f),"labels..."
 d = dict()
 for l in f:
@@ -65,9 +66,10 @@ for l in f:
   uri = t[0][1:]
   lab = t[1][:-6]
   d[lab]=uri
+#print list(d)[:10]
 #p = open("tests/messager.txt").read()
-p = open("gsc/gsc3_uniline.txt").read()
-#p = "Paris ou Bruxelles?"
+p = open("5g/fr.txt").read()
+#p = open("gsc/gsc3_uniline.txt").read()
 p = p.decode('utf-8')
 print "Text length:",len(p),"characters"
 s = wpt().tokenize(p)
