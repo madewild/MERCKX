@@ -78,19 +78,20 @@ def get_clusters(dic,prec):
   return clusters
 
 def print_clusters(clusters,dic):
-  for cluster in sorted(clusters, key=clusters.get, reverse=True)[:25]:
-    print cluster
-    abstract = get_abstract(cluster)
+  for c in sorted(clusters, key=clusters.get, reverse=True)[:25]:
+    print c
+    abstract = get_abstract(c)
     if abstract:
       print abstract
     doc = "articles"
-    if clusters[cluster][1]==1:
+    if clusters[c][1]==1:
       doc = "article"
-    print "Cluster size:",len(clusters[cluster][2])+1,"("+str(clusters[cluster][0]),"mentions from",clusters[cluster][1],doc+")"
-    print "\t",dic[cluster][0],cluster
-    for match in clusters[cluster][2]:
+    print "Cluster size:",len(clusters[c][2])+1
+    print clusters[c][0],"mentions from",clusters[c][1],doc
+    print "\t",dic[c][0],c
+    for match in clusters[c][2]:
       print "\t",dic[match][0],match
-    nb = int(eurolib(cluster))
+    nb = int(eurolib(c))
     if nb==1:
       print "One more result at the European Library"
     elif nb>0:
@@ -136,7 +137,7 @@ def get_abstract(concept):
       elif a["lang"]=="fr":
          abstract = a["value"]
     try:
-      return re.findall(r"^.+?\.",abstract)[0] # only first sentence of abstract
+      return re.findall(r"^.+?\.",abstract)[0]
     except UnboundLocalError:
       return False
   except KeyError:
