@@ -18,7 +18,7 @@ from nltk.tokenize import wordpunct_tokenize
 #############
 
 def get_files(folder):
-  listbase = 'corpus/'+folder+"/"
+  listbase = "corpus/"+folder+"/"
   listing = os.listdir(listbase)
   return (listbase,listing)
 
@@ -45,7 +45,7 @@ def get_texts(listbase,listing):
       xml = open(ff).read()
       soup = bs(xml,"xml")
       try:
-        body = soup.clip.content.body.find_all('p')
+        body = soup.clip.content.body.find_all("p")
         text = " ".join([par.string for par in body])
         texts[f] = text
       except IndexError:
@@ -100,9 +100,9 @@ def print_clusters(clusters,dic):
 def eurolib(concept):
   base_url = "http://data.theeuropeanlibrary.org/opensearch/json?"
   param = {}
-  param['apikey'] = '4trbi621oika4hd6nqnscr9vcq'
-  topic = unicode(concept).encode('utf-8')
-  param['query'] = 'advanced((SUBJECT,'+topic+'))'
+  param["apikey"] = "4trbi621oika4hd6nqnscr9vcq"
+  topic = unicode(concept).encode("utf-8")
+  param["query"] = "advanced((SUBJECT,"+topic+"))"
   url = base_url + urllib.urlencode(param)
   text = urllib2.urlopen(url).read()
   json_code = json.loads(text)
@@ -110,7 +110,7 @@ def eurolib(concept):
 
 def dbpedia(concept):
   base_url = "http://dbpedia.org/data/"
-  topic = unicode(concept).encode('utf-8')
+  topic = unicode(concept).encode("utf-8")
   url = base_url+topic+".json"
   text = urllib2.urlopen(url).read()
   try:
@@ -136,7 +136,7 @@ def get_abstract(concept):
       elif a["lang"]=="fr":
          abstract = a["value"]
     try:
-      return re.findall(r'^.+?\.',abstract)[0] # only first sentence of abstract
+      return re.findall(r"^.+?\.",abstract)[0] # only first sentence of abstract
     except UnboundLocalError:
       return False
   except KeyError:
@@ -168,19 +168,19 @@ def main(argv):
   try:
     opts, args = getopt.getopt(argv,"tew")
   except getopt.GetoptError:
-    print 'parse.py -t OR -e FOLDER'
+    print "parse.py -t OR -e FOLDER"
     sys.exit(2)
   for opt, arg in opts:
-    if opt == '-t':
+    if opt == "-t":
       titles = get_titles(listbase,listing)
       clusters = get_clusters(titles,4)
       print_clusters(clusters,titles)
-    elif opt == '-e':
+    elif opt == "-e":
       texts = get_texts(listbase,listing)
       entities = get_entities(texts)
       clusters = get_clusters(entities,2)
       print_clusters(clusters,entities)
-    elif opt == '-w':
+    elif opt == "-w":
       texts = get_texts(listbase,listing)
       freq = get_words(texts.values())
       yearlist = texts_by_year(texts)
