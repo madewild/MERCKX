@@ -1,0 +1,53 @@
+<html>
+  <head>
+    <script type='text/javascript' src='https://www.google.com/jsapi'></script>
+    <script type='text/javascript'>
+     google.load('visualization', '1', {'packages': ['geochart']});
+     google.setOnLoadCallback(drawMarkersMap);
+
+      function drawMarkersMap() {
+      var data = google.visualization.arrayToDataTable([
+        ['Lat', 'Lng', 'Place', 'Hits'],
+[50.8345035, 2.9225399, 'Zillebeke', 398],
+[50.9002575, 3.0207328, 'Passendale', 333],
+[50.7971484, 2.7464372, 'Westouter', 252],
+[50.8170545, 2.7634047, 'Reningelst', 163],
+[50.8492265, 2.8779465, 'Ieper', 148],
+[50.9528136, 2.8523982, 'Merkem', 127],
+[50.9258047, 2.8646858, 'Bikschote', 123],
+[50.8727216, 2.9874808, 'Zonnebeke', 112],
+[50.8053761, 2.9371958, 'Hollebeke', 108],
+[50.7858578, 2.8831131, 'Wijtschate', 104],
+[50.8588172, 2.6206457, 'Watou', 93],
+[50.8549596, 2.7267929, 'Poperinge', 75],
+[50.9135965, 2.920005, 'Langemark', 72],
+[51.033331, 2.8658393, 'Diksmuide', 57],
+[50.8338478, 2.9939124, 'Gheluvelt', 55],
+[50.9546429, 2.810466, 'Noordschote', 49],
+[50.84788, 3.024675, 'Becelaere', 44],
+[51.21543, 2.928656, 'Oostende', 44],
+[50.8904872, 2.6560368, 'Proven', 42],
+[50.8536639, 2.8243473, 'Vlamertinge', 42]
+      ]);
+
+      var options = {
+	region: 'BE',
+	sizeAxis: { minValue: 0, maxValue: 400},
+        displayMode: 'markers',
+	colorAxis: {colors: ['green', 'red']}
+      };
+
+      var chart = new google.visualization.GeoChart(document.getElementById('chart_div'));
+      google.visualization.events.addListener(chart, 'select', function() {
+        var selectionIdx = chart.getSelection()[0].row;
+        var name = data.getValue(selectionIdx, 2);
+        window.open('http://nl.wikipedia.org/wiki/' + name);
+    });
+      chart.draw(data, options);
+    };
+    </script>
+  </head>
+  <body>
+    <div id="chart_div" style="width: 1350px; height: 750px;"></div>
+  </body>
+</html>
