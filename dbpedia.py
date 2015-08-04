@@ -47,7 +47,7 @@ def print_uri(ngram,i):
   global places
   a,z = i
   uri = d[ngram]
-  uri = uri.replace("http://dbpedia.org/resource/", "dbr:")
+  #uri = uri.replace("http://dbpedia.org/resource/", "dbr:")
   if "disambiguation" not in uri and uri in places:
     print "gsc3.txt\t"+str(a)+"\t"+str(z)+"\t"+up(str(uri[4:]))
   for word in ngram.split()[1:]:
@@ -55,32 +55,40 @@ def print_uri(ngram,i):
     del ind[0]
 
 d = dict()
-print "Building label dictionary..."
+print "Building label dictionary...",
 for lang in ['nl','fr']:
-  filename = "dbpedia/labels_"+lang+".nt"
+  filename = "dbpedia/labels_en_uris_"+lang+".lst"
   with open(filename) as f:
     for l in f:
-      lok = l.decode("unicode_escape").strip()
-      t = lok.split('> "')
-      uri = t[0][1:]
-      lab = t[1][:-6]
-      d[lab]=uri  
+      lok = l.decode("utf8").strip()
+      t = lok.split('\t')
+      uri = t[1]
+      lab = t[0]
+      d[lab] = uri
+print len(d),"labels"
 
 places = set()
-print "Loading places..."
+print "Loading places...",
 with open("dbpedia/dbpedia-places.lst") as locs:
   for uri in locs:
     places.add(uri.strip())
+print len(places),"locations"
 
 #p = open("5g/fr.txt").read()
 p = open("gsc/gsc3_uniline.txt").read()
-p = p.decode('utf-8')
+p = p.decode('utf8')
 print "Text length:",len(p),"characters"
 s = wpt().tokenize(p)
 ind = list(wpt().span_tokenize(p))
 for i,w in enumerate(s):
   if len(w)>2:
-    n3 = " ".join(s[i:i+3])
+    w = w.replace('leper','Ieper')
+    if w.isupper():
+      w = w.capitalize()
+    if s[i+1]=="-": # if compound
+      n3 = "".join(s[i:i+3])
+    else:
+      n3 = " ".join(s[i:i+3])
     n2 = " ".join(s[i:i+2])
     if n3 in d:
       i1 = ind[i]
