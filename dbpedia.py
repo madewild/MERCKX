@@ -2,14 +2,19 @@
 # -*- coding: utf-8 -*-
 
 from nltk.tokenize import WordPunctTokenizer as wpt
+from jellyfish import levenshtein_distance as ld
 from SPARQLWrapper import SPARQLWrapper, JSON
+from urllib import unquote_plus as up
+
+import urllib2
+import time
 
 import sys
 reload(sys)
 sys.setdefaultencoding('utf8')
  
 def get_labels(uri):
-  sparql = SPARQLWrapper("http://dbpedia.org/sparql")
+  sparql = SPARQLWrapper("http://live.dbpedia.org/sparql")
   sparql.setQuery("""
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     SELECT DISTINCT ?label
@@ -39,37 +44,36 @@ def print_uri(ngram,i):
   global s
   global d
   global ind
+  global places
   a,z = i
-  l = len(ngram.split())
   uri = d[ngram]
-  types = get_types(uri)
-  place = "http://dbpedia.org/ontology/Place"
-  sep = "\t"
-  if len(ngram)<7:
-    sep = "\t\t"
-  if "disambiguation" not in uri and place in types:
-    #labels = get_labels(uri)
-    #print ngram,sep,a,"\t",z,"\t",uri
-    print "gsc3.txt\t"+str(a)+"\t"+str(z)+"\t"+uri[28:]
-    #print "(also known as",", ".join(labels-set([ngram]))+")"
+  uri = uri.replace("http://dbpedia.org/resource/", "dbr:")
+  if "disambiguation" not in uri and uri in places:
+    print "gsc3.txt\t"+str(a)+"\t"+str(z)+"\t"+up(str(uri[4:]))
   for word in ngram.split()[1:]:
     s.remove(word)
     del ind[0]
 
-#f = open("dbpedia/labels_nl.nt").readlines()+open("dbpedia/labels_fr.nt").readlines()
-f = open("dbpedia/labels_fr.nt").readlines()
-print "Processing",len(f),"labels..."
 d = dict()
-for l in f:
-  lok = l.decode("unicode_escape").strip()
-  t = lok.split('> "')
-  uri = t[0][1:]
-  lab = t[1][:-6]
-  d[lab]=uri
-#print list(d)[:10]
-#p = open("tests/messager.txt").read()
-p = open("5g/fr.txt").read()
-#p = open("gsc/gsc3_uniline.txt").read()
+print "Building label dictionary..."
+for lang in ['nl','fr']:
+  filename = "dbpedia/labels_"+lang+".nt"
+  with open(filename) as f:
+    for l in f:
+      lok = l.decode("unicode_escape").strip()
+      t = lok.split('> "')
+      uri = t[0][1:]
+      lab = t[1][:-6]
+      d[lab]=uri  
+
+places = set()
+print "Loading places..."
+with open("dbpedia/dbpedia-places.lst") as locs:
+  for uri in locs:
+    places.add(uri.strip())
+
+#p = open("5g/fr.txt").read()
+p = open("gsc/gsc3_uniline.txt").read()
 p = p.decode('utf-8')
 print "Text length:",len(p),"characters"
 s = wpt().tokenize(p)
@@ -79,7 +83,10 @@ for i,w in enumerate(s):
     n3 = " ".join(s[i:i+3])
     n2 = " ".join(s[i:i+2])
     if n3 in d:
-      print_uri(n3,a,z)
+      i1 = ind[i]
+      i3 = ind[i+2]
+      ii = (i1[0],i3[1])
+      print_uri(n3,ii)
     elif n2 in d:
       i1 = ind[i]
       i2 = ind[i+1]
