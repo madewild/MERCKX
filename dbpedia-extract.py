@@ -59,21 +59,3 @@ with open('dbpedia-labels.lst', 'w') as outFile:
 print('{0:6d} labels with a different URI and the same (place) type have been updated'.format(nUpdate))
 print('{0:6d} labels with a different URI and a different (place) type have been removed'.format(nConflict))
 print('{0:6d} labels have been written to dbpedia-labels.lst'.format(len(labels.keys())))
-
-# extract place labels (EN:10948106=>731544, FR:942506=>187859, NL:674849=>194680)
-# for lang in ('fr', 'nl'):
-# 	print('--- Extracting DBpedia ' + lang.upper() + ' labels...')
-# 	inFilename = 'labels_en_uris_' + lang + '.nt'
-# 	outFilename = inFilename.replace('.nt','.lst')
-# 	with open(outFilename, 'w') as outFile:
-# 		with open(inFilename, 'r') as inFile:
-# 		  for inLine in inFile:
-# 		  	# triple: uri rdfs:label "label"@fr .
-# 		  	words = inLine.split()
-# 		  	uri = words[0].replace('http://dbpedia.org/resource/','dbr:').replace('<','').replace('>','') # http://dbpedia.org/... => dbr:...
-# 		  	if uri in places: # save label <tab> uri if uri is a place
-# 			  	label = ' '.join(words[2:-1]).replace('@'+lang,'').decode('unicode_escape')[1:-1] # "label"@fr => label
-# 		  		outLine = label + '\t' + uri + '\n'
-# 		  		outFile.write(outLine) # write line to .lst file
-
-

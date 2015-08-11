@@ -56,15 +56,14 @@ def print_uri(ngram,i):
 
 d = dict()
 print "Building label dictionary...",
-for lang in ['nl','fr']:
-  filename = "dbpedia/labels_en_uris_"+lang+".lst"
-  with open(filename) as f:
-    for l in f:
-      lok = l.decode("utf8").strip()
-      t = lok.split('\t')
-      uri = t[1]
-      lab = t[0]
-      d[lab] = uri
+filename = "dbpedia/dbpedia-labels.lst"
+with open(filename) as f:
+  for l in f:
+    lok = l.decode("utf8").strip()
+    t = lok.split('\t')
+    lab = t[0]
+    uri = t[1]
+    d[lab] = uri
 print len(d),"labels"
 
 places = set()
@@ -75,14 +74,14 @@ with open("dbpedia/dbpedia-places.lst") as locs:
 print len(places),"locations"
 
 #p = open("5g/fr.txt").read()
-p = open("gsc/gsc3_uniline.txt").read()
+p = open("gsc/corr/gsc3_uniline.new.txt").read()
 p = p.decode('utf8')
 print "Text length:",len(p),"characters"
 s = wpt().tokenize(p)
 ind = list(wpt().span_tokenize(p))
 for i,w in enumerate(s):
   if len(w)>2:
-    w = w.replace('leper','Ieper')
+    #w = w.replace('leper','Ieper')
     if w.isupper():
       w = w.capitalize()
     if s[i+1]=="-": # if compound
