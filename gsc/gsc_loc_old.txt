@@ -1,0 +1,203 @@
+187	198	Bouvancourt
+199	205	Fismes
+561	565	Pévy
+626	640	East Yorkshire
+1076	1082	Trigny
+1145	1151	Muizon
+1200	1205	Vesle
+1234	1240	Trigny
+1667	1673	Trigny
+1687	1701	East Yorkshire
+1936	1941	Vesle
+1945	1951	Muizon
+2100	2105	Vesle
+2109	2117	Jonchery
+2199	2205	Rheims
+2266	2272	Muizon
+2400	2406	Rheims
+2407	2413	Fismes
+2441	2447	Muizon
+2488	2493	Yesle		Vesle
+2928	2937	Aldershot
+3025	3030	Ypres
+3203	3210	P,russe		Prusse
+3389	3395	Iialie		Italie
+3431	3437	Modène
+3507	3513	Modèue		Modène
+3757	3765	Portugal
+3960	3969	Sillutrie	Sillistrie
+4001	4009	Moldavië	Moldavie
+4029	4035	Russie
+4049	4054	Pruib		Pruth
+4108	4113	Leowa
+4134	4144	Bessarabie
+4221	4227	Danube
+4279	4284	Jassy
+4386	4391	Jassy
+4522	4536	empire Ottoman
+4543	4549	Russie
+4592	4599	Turquie
+4809	4819	Sillislrie	Sillistrie
+4940	4947	Turquie
+6997	7005	Périgord
+7122	7130	Périgord
+7505	7510	Vitvy		Vitry
+7517	7522	Pabis		Paris
+7679	7684	Ypres
+7911	7914	Ath
+8062	8067	Ypres
+8650	8655	Ypres
+8834	8839	Ypres
+8889	8894	Ypres
+9070	9075	Ypres
+9494	9498	Yper
+9781	9785	Yper
+9876	9881	Chine
+10035	10040	Menin
+10061	10066	Ypres
+10067	10072	Ieper
+10258	10267	Bruxelles
+10270	10276	Laeken
+10325	10333	Flandres
+10377	10383	Furnes
+10385	10390	Ypres
+10440	10445	Dijon
+10475	10480	Dijon
+10632	10640	Schiedam
+10650	10659	Rotterdam
+10735	10740	Ypres
+10823	10828	Fumes		Furnes
+10856	10861	Lille
+11012	11022	Dickebusch
+11094	11099	Ypres
+11236	11241	Ypres
+11319	11324	Yprus		Ypres
+11353	11368	Jette-St-Pierre
+11410	11415	Ypres
+11449	11456	St Jean
+11489	11494	Ypres
+11536	11545	Becelaere
+11613	11618	Ypres
+11701	11706	Ypres
+11849	11859	Poperinghe
+11933	11943	Poperinghe
+12169	12174	Lille
+12244	12254	Poperinghe
+12486	12491	Lille
+12530	12535	Lille
+14383	14388	Ypres
+14595	14602	Zélande
+14653	14660	Ostende
+14792	14799	Ostende
+14952	14960	Bretagne
+15656	15659	Ath
+15932	15937	Ypres
+16306	16316	Poperinghe
+19588	19592	Gand
+22728	22733	Ypres
+24303	24310	Orléans
+24323	24327	Lyon
+24666	24673	Chalons
+24676	24681	Macoa		Macon
+24737	24741	Lyon
+25746	25751	Ypres
+25862	25869	Comines
+25870	25876	France
+25985	25989	Yper
+26173	26180	Ffandre		Flandre
+26201	26206	Ypres
+26537	26542	Lille
+26821	26825	Yper
+27184	27194	Dickebusch
+27201	27206	Ypres
+27257	27263	Italië		Italie
+28601	28605	Rome
+28733	28737	Mons
+30250	30255	Ypree		Ypres
+30263	30268	Menin
+30272	30281	Gheluvelt
+30450	30455	Yprea		Ypres
+30457	30464	Gheluwe
+30495	30502	Gheluwe
+30546	30553	Roulers
+30556	30561	Ypres
+31729	31734	Paris
+32164	32171	Norwège		Norvège
+32532	32538	Suèrle		Suède
+32543	32550	Norwège		Norvège
+32557	32565	Cap Nord
+33051	33060	Bruxelles
+33318	33325	Comines
+33326	33334	Belgique
+33482	33490	Comiïies	Comines
+33491	33499	Belgique
+33761	33772	Ten Brielen
+34109	34118	Crutseeke	Cruyseeke
+34353	34361	Belgique
+34441	34448	Comines
+34686	34693	Louvain
+35237	35242	Ypres
+36277	36286	Co mi nes	Comines
+36377	36380	Ath
+36651	36656	Vprës		Ypres
+37675	37684	Brnxelles	Bruxelles
+37791	37799	llainaut	Hainaut
+37835	37841	Laeken
+37888	37893	Üccle		Uccle
+37914	37920	Anvers
+37944	37948	Gand
+37970	37975	Liégc		Liège
+38261	38268	Dixhude		Dixmude
+38274	38280	YPJ1ES		Ypres
+38505	38512	Comines
+38585	38596	Wervicq-sud
+38654	38660	France
+38914	38921	Wervicq
+38922	38930	Belgique
+38945	38950	Menin
+39138	39143	Menin
+39326	39333	Weuvicq
+39334	39342	Belgique
+39561	39572	Wervicq-sud
+39612	39615	Lys
+39805	39813	Verviers
+39870	39873	Lys
+39875	39883	CÔURTRAI	Courtrai
+40167	40171	Lyon
+40229	40235	France
+40281	40288	Orléans
+40869	40872	Lys
+40874	40882	Courtrai
+40959	40967	Hollande
+40971	40978	La Have		La Haye
+41139	41147	Belgique
+41698	41706	Flandres
+41824	41832	Belgique
+41835	41846	Bois-le-duc
+41848	41858	Allemagise	Allemagne
+41873	41883	Magdebourg
+41948	41955	Hanovre
+42099	42107	Beulwitz
+44517	44525	Falmouth
+44794	44802	Belgique
+45271	45280	Edimbourg
+45527	45532	Paris
+45704	45713	Charleroi
+47601	47606	Ypres
+47785	47794	Zillebeke
+47809	47814	Ypres
+47908	47917	Zillebeke
+47976	47985	Zonnebeke
+48143	48148	Ypres
+48410	48415	Lille
+48493	48498	Lille
+48586	48594	Thourout
+48668	48676	Thourout
+48761	48766	Menin
+49149	49157	Belgique
+49904	49913	Edimbourg
+49917	49926	Bruxelles
+49954	49961	Comlnes		Comines
+50063	50070	Comines
+50089	50097	Messines
+50351	50358	Wêrvicq		Wervicq

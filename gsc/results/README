@@ -1,0 +1,128 @@
+README
+======
+
+This readme describes the data required for the results reported in Tables 1 and 2 of submission 46 to the SRW. 
+
+Directories
+-----------
+The data is divided into the following directories:
+
+- data
+  - mapping
+    - map-23022015: the mapping file (with redirects etc.) applied to golden sets and results to normalize the annotations to the same version of Wikipedia
+
+  - reference
+    - unmapped: reference annotations before applying the mapping file
+    - mapped: reference, mapped
+
+  - system_results
+    - unmapped: annotations before applying the map
+    - mapped: annotations after applying it
+
+The actual reference texts for all corpora are available here:
+https://github.com/marcocor/bat-framework/tree/master/benchmark/datasets
+
+The annotation format in the original datasets is specific to each dataset. We have converted the annotations to a common tab-delimited format.
+
+Formats
+-------
+Annotations are expressed in the following tab-separated format, in all annotation files (reference or system)
+
+filename\tstart\tend\tentity
+
+The mapping file uses the following format
+
+canonical form\talternative form 1\talternative form 2\t....\talternative form N
+
+
+Naming conventions
+------------------
+
+The naming convention in the systems' results follows the following schema:
+
+corpusname-annotatorname-weights
+corpusname-annotatorname-weights.mapped
+
+corpusname is one of
+ - aidaconnlb
+ - iitb
+ - msnbc
+ - aquaint
+
+annotatorname is one of
+ - tagme
+ - spotlight
+ - wikiminer
+ - aida
+ - babelfy
+ - combined
+
+"combined" stands for the combined workflow presented in the paper
+
+weights is either "sam" or "ent".
+  - "sam" means that, in order to accept individual annotators' annotations, the optimal thresholds for the strong annotation match (SAM) measure were used (see each column "t" in Table 1 in paper).
+  Similarly, in order to weight annotations in the voting scheme, the precision of the annotators as evaluated with the SAM measure was used, i.e. Table 1 precision on AIDA/CONLLB for voting MSNBC results, and Table 1 precision on IITB for voting AQUAINT annotations.
+
+  - "ent" means that, in order to accept individual annotators' annotations, the optimal thresholds for the entity match (ENT) measure were used (see each column "t" in Table 2 in paper).
+  Similarly, in order to weight annotations in the voting scheme, the precision of the annotators as evaluated with the ENT measure was used, i.e. Table 2 precision on AIDA/CONLLB for voting MSNBC results, Table 2 precision on IITB for voting AQUAINT annotations.
+
+Obtaining the results tables
+----------------------------
+
+This requires the neleval tool: https://github.com/wikilinks/neleval
+
+Once the tool is in place, from the same directory where the tool resides, a script along the lines of the following would produce the  Precision/Recall/F1 results for each corpus.
+
+for measure in sam ent ; do  
+  if [ $measure = sam ] ; then 
+    lookfor='strong_link_match'
+  else lookfor='entity_match' 
+  fi  
+  for corpus in aidaconllb iitb msnbc aquaint ; do  
+    echo -e "\n** ${corpus} [${measure}] **"
+    for annotator in tagme spotlight wikiminer aida babelfy combined ; do
+        echo "== ${annotator} =="
+        ./nel evaluate -g /path/to/data/reference/mapped/${corpus}-gold.mapped \
+         /path/to/data/system_results/mapped/${corpus}-${annotator}-${measure}.mapped 2> /dev/null \
+         | grep $lookfor
+    done
+  done
+done
+
+'strong_link_match' is the name for the strong annotation match measure in the tool's results, 'entity_match' is the name for the entity match measure. 
+
+Result format is truepositives\tfalsepositives\ttruepositives\tfalsenegatives\tprecision\trecall\tf1\tmeasure
+True positives appear twice. 
+
+As an example, a script like the above would output the following table, for aidaconllb strong annotation match
+
+** aidaconllb [sam] **
+== tagme ==
+2417	1990	2417	2068	0.5484	0.5389	0.5436	strong_link_match
+== spotlight ==
+1741	4459	1741	2744	0.2808	0.3882	0.3259	strong_link_match
+== wikiminer ==
+2255	2718	2255	2230	0.4534	0.5028	0.4768	strong_link_match
+== aida ==
+2096	638	2096	2389	0.7666	0.4673	0.5807	strong_link_match
+== babelfy ==
+1526	2875	1526	2959	0.3467	0.3402	0.3435	strong_link_match
+== combined ==
+2766	1681	2766	1719	0.6220	0.6167	0.6193	strong_link_match
+
+
+Significance tests
+------------------
+We need to identify the best system (generally "combined") and the second best. Then they can be compared like in the following example. The example compares, for Table 2, aquaint-combined-ent.mapped (best results) to aquaint-wikiminer-ent.mapped (second best):
+
+$ ./nel significance --permute -m entity_match -f tab \
+    -g /path/to/data/reference/mapped/aquaint-gold.mapped \
+       /path/to/data/system_results/mapped/aquaint-wikiminer-ent.mapped \
+       /path/to/data/system_results/mapped/aquaint-combined-ent.mapped
+
+The last field in the output of that command is the p-value for fscore. The output would look like below.
+
+sys1                                                              	sys2                                                            	measure     	Δ-precis	p-precis	Δ-recall	p-recall	Δ-fscore	p-fscore
+
+/path/to/data/system_results/mapped/aquaint-wikiminer-ent.mapped	/path/to/data/system_results/mapped/aquaint-combined-ent.mapped 	entity_match	+0.015412371	0.023190724	-0.048143054	0.000399840	-0.013472316	0.015993603
+

@@ -1,64 +1,68 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from nltk.tokenize import WordPunctTokenizer as wpt
+import os, sys, urllib, urllib2
 from urllib import unquote_plus as up
-import urllib2
+from nltk.tokenize import WordPunctTokenizer as tokenizer
 
 # from jellyfish import levenshtein_distance as ld
 # to add support for clustering
 
-import sys
-reload(sys)
-sys.setdefaultencoding('utf8')
+# check parameters
+txtType = sys.argv[1].upper() if len(sys.argv) > 1 else ''
+txtFilename = sys.argv[2] if len(sys.argv) > 2 else ''
+entityTypes = {'EVE':'Event', 'LOC':'Place', 'PER':'Person', 'ORG':'Organisation'}
+if txtType not in entityTypes or not os.path.isfile(txtFilename):
+	print "Syntax: merckx.py <type> <filename>"
+	print "where   <type> is the entity type: EVE LOC PER ORG"
+	print "and     <filename> is the name of text file to analyze"
+	print
+	sys.exit(0)
 
-def print_uri(ngram,i):
-  global s
-  global d
-  global ind
-  a,z = i
-  uri = d[ngram]
-  print "gsc3.txt\t"+str(a)+"\t"+str(z)+"\t"+up(str(uri[4:]))
-  for word in ngram.split()[1:]:
-    s.remove(word)
-    del ind[0]
+# load labels of entities
+labels = {}
+entityType = entityTypes[txtType]
+filename = 'data/labels_'+entityType+'.lst'
+with open(filename) as inFile:
+	lines = inFile.read().decode('utf8').strip().split('\n')
+	for line in lines:
+		label,uri = line.split('\t')		
+		labels[label] = uri
 
-d = dict()
-print "Building label dictionary...",
-filename = "dbpedia/dbpedia-labels.lst"
-with open(filename) as f:
-  for l in f:
-    lok = l.decode("utf8").strip()
-    t = lok.split('\t')
-    lab = t[0]
-    uri = t[1]
-    d[lab] = uri
-print len(d),"labels"
-
-#p = open("gsc/corr/gsc3_uniline.new.txt").read()
-p = open("perelman_uniline.txt").read()
-p = p.decode('utf8')
-print "Text length:",len(p),"characters"
-s = wpt().tokenize(p)
-ind = list(wpt().span_tokenize(p))
-for i,w in enumerate(s):
-  if len(w)>2:
-    if w.isupper():
-      w = w.capitalize()
-    if s[i+1]=="-": # if compound
-      n3 = "".join(s[i:i+3])
-    else:
-      n3 = " ".join(s[i:i+3])
-    n2 = " ".join(s[i:i+2])
-    if n3 in d:
-      i1 = ind[i]
-      i3 = ind[i+2]
-      ii = (i1[0],i3[1])
-      print_uri(n3,ii)
-    elif n2 in d:
-      i1 = ind[i]
-      i2 = ind[i+1]
-      ii = (i1[0],i2[1])
-      print_uri(n2,ii)
-    elif w in d:
-      print_uri(w,ind[i])
+# load + tokenize + extract entities from text file
+source = os.path.basename(txtFilename)
+text = open(txtFilename).read().decode('utf8')
+tokens = tokenizer().tokenize(text) # list of tokens from NLTK Tokenizer
+pos = list(tokenizer().span_tokenize(text)) # list of positions (start,end)
+sep = ' ' # word separator; may be language-dependent
+lastpos = 0 # lastpos position
+for i,w in enumerate(tokens):
+	if len(w) >= 3: # ignore less than 3 chars
+		w3 = sep.join(tokens[i:i+3])
+		if tokens[i+1:i+2] == "-": # check if compound words
+			w3 = ''.join(tokens[i:i+3])
+		w2 = sep.join(tokens[i:i+2])
+		w1 = w
+		w3 = w3.title() if w3.isupper() else w3 # NEW YORK CITY => New York City
+		w2 = w2.title() if w2.isupper() else w2
+		w1 = w1.title() if w1.isupper() else w1
+		comp = ['',w1,w2,w3]
+		if i+2<len(tokens) and comp[3] in labels: # 3 words
+			label = w3
+			start = pos[i][0]
+			end = pos[i+2][1]
+		elif i+1<len(tokens) and comp[2] in labels: # 2 words
+			label = w2
+			start = pos[i][0]
+			end = pos[i+1][1]
+		elif comp[1] in labels: # 1 word
+			label = w1
+			start = pos[i][0]
+			end = pos[i][1]
+		else:
+			continue
+		if start < lastpos: # skip already processed words
+			continue
+		lastpos = end			
+		uri = up(str(labels[label]))
+		print('{0}\t{1}\t{2}\t{3}'.format(source, start, end, uri)) # display results
