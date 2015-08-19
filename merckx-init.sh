@@ -14,6 +14,7 @@ echo
 DOWNLOAD_PATH=http://downloads.dbpedia.org/2014
 
 # create data directories
+echo "*** Creating data directories..."
 if [ ! -d dbpedia ]; then
 	mkdir dbpedia
 fi
