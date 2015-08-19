@@ -1,0 +1,30 @@
+p {
+  font-weight: bold;
+  font-family: sans-serif;
+}
+
+td {
+  vertical-align: middle;
+  padding: 30px;
+  font-size: 200%;
+}
+
+a {
+  color: #000084;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #000084;
+  text-decoration: underline;
+}
+
+a:active {
+  color: #FF0000;
+  text-decoration: underline;
+}
+
+a:visited {
+  color: #000084;
+  text-decoration: none;
+}
