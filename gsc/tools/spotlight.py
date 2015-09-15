@@ -26,16 +26,17 @@ if filetype not in ['raw', 'corr']:
 	print("usage: {0} raw or corr".format(sys.argv[0]))
 	sys.exit()
 if filetype == 'raw':
-	inFilename = "gsc3.txt"
-	outFilename = "raw-Spotlight-ent.mapped"
+	inFilename = "../gsc3.txt"
+	outFilename = "raw-Spotlight2-ent.mapped"
 else:	
-	inFilename = "gsc3.new.txt"
-	outFilename = "corr-Spotlight-ent.mapped"
+	inFilename = "../corr/gsc3.new.txt"
+	outFilename = "corr-Spotlight2-ent.mapped"
 
 # extract places entities from DBpedia Spotlight service
 def get_entities(text,offset):
 	global places
-	url = "http://spotlight.dbpedia.org/rest/annotate"
+	#url = "http://spotlight.dbpedia.org/rest/annotate"
+	url = "http://spotlight.sztaki.hu:2222/rest/annotate"
 	values = {'text' : text}
 	data = urllib.urlencode(values)
 	headers = {'Accept': 'application/json'}
@@ -61,7 +62,7 @@ def get_entities(text,offset):
 
 # load DBpedia places
 places = set()
-with open("dbpedia-places.lst") as locs:
+with open("entities_Place.lst") as locs:
 	for uri in locs:
 		places.add(uri.strip())
 

@@ -101,7 +101,11 @@ def print_clusters(clusters,dic):
 def eurolib(concept):
   base_url = "http://data.theeuropeanlibrary.org/opensearch/json?"
   param = {}
-  param["apikey"] = "[API]" # replace [API] by API key
+  try:
+    apikey = open("apikey.pwd").read().strip()
+  except IOError:
+    apikey = raw_input("Enter your API key: ").strip()
+  param["apikey"] = apikey # replace apikey by your API key
   topic = unicode(concept).encode("utf-8")
   param["query"] = "advanced((SUBJECT,"+topic+"))"
   url = base_url + urllib.urlencode(param)

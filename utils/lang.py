@@ -6,7 +6,7 @@ from collections import defaultdict
 #from jellyfish import levenshtein_distance as ld
 #from nltk.tokenize import wordpunct_tokenize
 import langid
-langid.set_languages(['nl','fr'])
+langid.set_languages(['en','nl','fr'])
 
 def get_files(folder):
   listbase = 'corpus/'+folder+"/"
@@ -22,7 +22,7 @@ folders = os.listdir('corpus/')
 #gsc = codecs.open("gsc2.txt").readlines()
 #gs = [l.split("\t") for l in gsc]
 
-for folder in sorted(folders):
+for folder in sorted(['TYT']):
   #dic = defaultdict(lambda:0)
   listbase,listing = get_files(folder)
   for f in sorted(listing):
