@@ -13,7 +13,7 @@ LABEL_MAX_LENGTH = 40 # maximum number of characters per label
 
 # check command line arguments
 langs = [lang.upper() for lang in sys.argv[1:]] or ['EN','NL','FR']
-entityTypes = ['Event', 'Organisation', 'Person', 'Place']
+entityTypes = ['Place']
 
 # load entities
 entities = {}
@@ -51,6 +51,8 @@ print('*** Building list of labels...')
 labels = {}
 for entityType in entityTypes:
 	labels[entityType] = {}
+upd_uris = 0
+del_uris = 0
 for lang in langs: # scan all labels per language and filter per entityType
 	filename = 'dbpedia/labels_en.nt' if lang == 'EN' else 'dbpedia/labels_en_uris_'+lang.lower()+'.nt'
 	with open(filename, 'r') as inFile: # read labels_*.nt
@@ -64,20 +66,23 @@ for lang in langs: # scan all labels per language and filter per entityType
 			uri = triple[0][1:-1].replace('http://dbpedia.org/resource/','dbr:') # <http://dbpedia.org/resource/base> => dbr:base
 			label = ' '.join(triple[2:-1])[1:-4].decode('unicode_escape') # "label"@fr => label
 			if len(label) > LABEL_MAX_LENGTH: # do not process label larger than 40 characters
-				continue 
+				continue
 			for entityType in entityTypes:
 				if label in labels[entityType]: # label already exists
 					if uri == labels[entityType][label]: # same uri
 						pass
 					elif uri in entities[entityType]: # uri is an entity => save uri
 						labels[entityType][label] = uri
+						upd_uris+=1
 					else: # uri is not an entity => remove entry
 						del labels[entityType][label]
+						del_uris+=1
 				elif uri in entities[entityType]: # uri is an entity => save uri
 					labels[entityType][label] = uri
 				else:
 					pass
 		print('--- {0:8d} labels ({1})'.format(countLine,lang.upper()))
+print upd_uris, del_uris
 
 # save labels per entityType into 'labels-<entityType>.lst'
 print '***  Writing list of labels...'
