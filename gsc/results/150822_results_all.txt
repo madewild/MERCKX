@@ -1,0 +1,47 @@
+** raw [ent] **
+== Spotlight ==
+41	47	41	172	0.466	0.192	0.272	entity_match
+== Spotlight2 ==
+90	112	90	123	0.446	0.423	0.434	entity_match
+== Zemanta ==
+71	9	71	142	0.887	0.333	0.485	entity_match
+== Babelfy ==
+80	42	80	133	0.656	0.376	0.478	entity_match
+== MERCKX ==
+106	54	106	107	0.662	0.498	0.568	entity_match
+
+** corr [ent] **
+== Spotlight ==
+44	50	44	169	0.468	0.207	0.287	entity_match
+== Spotlight2 ==
+101	113	101	112	0.472	0.474	0.473	entity_match
+== Zemanta ==
+79	9	79	134	0.898	0.371	0.525	entity_match
+== Babelfy ==
+95	43	95	118	0.688	0.446	0.541	entity_match
+== MERCKX ==
+119	41	119	94	0.744	0.559	0.638	entity_match
+
+** raw [sam] **
+== Spotlight ==
+123	260	123	531	0.321	0.188	0.237	strong_link_match
+== Spotlight2 ==
+221	252	221	433	0.467	0.338	0.392	strong_link_match
+== Zemanta ==
+182	28	182	472	0.867	0.278	0.421	strong_link_match
+== Babelfy ==
+210	107	210	444	0.662	0.321	0.433	strong_link_match
+== MERCKX ==
+264	104	264	390	0.717	0.404	0.517	strong_link_match
+
+** corr [sam] **
+== Spotlight ==
+157	249	157	497	0.387	0.240	0.296	strong_link_match
+== Spotlight2 ==
+293	253	293	361	0.537	0.448	0.488	strong_link_match
+== Zemanta ==
+237	30	237	417	0.888	0.362	0.515	strong_link_match
+== Babelfy ==
+261	106	261	393	0.711	0.399	0.511	strong_link_match
+== MERCKX ==
+338	82	338	316	0.805	0.517	0.629	strong_link_match
