@@ -12,7 +12,7 @@ Run `./merckx-init.sh` to download all resources from DBpedia. This will automat
 Then use `merckx.py <type> <filename>` where `<type>` is the entity type (EVE, LOC, PER, or ORG) and `<filename>` is the name of text file to analyze.
 For instance, `merckx.py LOC example.txt` (first part of the Wikipedia article about Belgium) will give the following output:
 
-belgium.txt	35	    41	    dbr:Belgium
+```belgium.txt	35	    41	    dbr:Belgium
 belgium.txt	72	    80	    dbr:Belgium
 belgium.txt	208	    214	    dbr:Europe
 belgium.txt	227	    233	    dbr:France
@@ -36,4 +36,4 @@ belgium.txt	3299	3313	dbr:European_Union
 belgium.txt	3386	3400	dbr:European_Union
 belgium.txt	3495	3503	dbr:Brussels
 belgium.txt	3633	3641	dbr:Brussels
-belgium.txt	3804	3812	dbr:Schengen,_Luxembourg
+belgium.txt	3804	3812	dbr:Schengen,_Luxembourg```
