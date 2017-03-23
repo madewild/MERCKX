@@ -13,9 +13,9 @@ txtType = sys.argv[1].upper() if len(sys.argv) > 1 else ''
 txtFilename = sys.argv[2] if len(sys.argv) > 2 else ''
 entityTypes = {'EVE':'Event', 'LOC':'Place', 'PER':'Person', 'ORG':'Organisation'}
 if txtType not in entityTypes or not os.path.isfile(txtFilename):
-	print "Syntax: merckx.py <type> <filename>"
-	print "where   <type> is the entity type: EVE LOC PER ORG"
-	print "and     <filename> is the name of text file to analyze"
+	print("Syntax: merckx.py <type> <filename>")
+	print("where   <type> is the entity type: EVE LOC PER ORG")
+	print("and     <filename> is the name of text file to analyze")
 	print
 	sys.exit(0)
 
