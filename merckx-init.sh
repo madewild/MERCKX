@@ -1,17 +1,14 @@
 #!/bin/bash
 
-#
-# download DBpedia 2014 dataset and initialize MERCKX data files
-#
+# Download DBpedia dataset and initialize MERCKX data files
 
 echo
-echo "MERCKX init - Download DBpedia 2014 dataset and initialize MERCKX data files"
+echo "MERCKX init - Download DBpedia dataset and initialize MERCKX data files"
 echo "WARNING: files are large so each step may take several minutes to complete..."
 echo
 
 # DBpedia download root URL
-# DOWNLOAD_PATH=http://downloads.dbpedia.org/2015-04/core-i18n
-DOWNLOAD_PATH=http://downloads.dbpedia.org/2014
+DOWNLOAD_PATH=http://downloads.dbpedia.org/3.9
 
 # create data directories
 echo "*** Creating data directories..."
