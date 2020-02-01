@@ -4,7 +4,7 @@
 import os
 import sys
 import urllib
-from urllib import unquote_plus as up
+from urllib.parse import unquote_plus as up
 from nltk.tokenize import WordPunctTokenizer as tokenizer
 
 # from jellyfish import levenshtein_distance as ld
@@ -25,7 +25,7 @@ if txtType not in entityTypes or not os.path.isfile(txtFilename):
 labels = {}
 entityType = entityTypes[txtType]
 filename = 'data/labels_'+entityType+'.lst'
-with open(filename) as inFile:
+with open(filename, 'rb') as inFile:
     lines = inFile.read().decode('utf8').strip().split('\n')
     for line in lines:
         label, uri = line.split('\t')
@@ -33,7 +33,7 @@ with open(filename) as inFile:
 
 # load + tokenize + extract entities from text file
 source = os.path.basename(txtFilename)
-text = open(txtFilename).read().decode('utf8')
+text = open(txtFilename, 'rb').read().decode('utf8')
 tokens = tokenizer().tokenize(text) # list of tokens from NLTK Tokenizer
 pos = list(tokenizer().span_tokenize(text)) # list of positions (start,end)
 sep = ' ' # word separator; may be language-dependent
